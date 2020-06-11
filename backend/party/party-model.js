@@ -17,6 +17,7 @@ function getTodoList(id) {
         .join('todos as t', 'p.todos_id', 't.id')
         .where('p.id', '=', id)
         .select('p.party_name', 't.todo')
+        .orderBy("t.id")
 }
 
 function getShoppingList(id) {
@@ -24,4 +25,5 @@ function getShoppingList(id) {
         .join('items as i', 'p.items_id', 'i.id')
         .where('p.id', '=', id)
         .select('p.party_name', 'i.item')
+        .orderBy("i.id")
 }

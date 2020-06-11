@@ -10,12 +10,12 @@ exports.up = function(knex) {
             .references('id')
             .inTable('todos')
             .unsigned()
-            .notNullable();
+            .notNullable()
         tbl.integer('items_id')
             .references('id')
             .inTable('items')
             .unsigned()
-            .notNullable();
+            .notNullable()
         tbl.integer('budget').notNullable();
         tbl.integer('attendance').notNullable();
     })
