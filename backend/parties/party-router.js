@@ -49,4 +49,23 @@ router.get("/:id/todo", (req, res) => {
     });
 });
 
+router.get("/:id/item", (req, res) => {
+  const { id } = req.params;
+
+  Parties.findItem(id)
+    .then((items) => {
+      if (items.length) {
+        res.json(items);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find a item for given party" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to get items" });
+    });
+});
+
 module.exports = router;
