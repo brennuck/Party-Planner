@@ -68,4 +68,17 @@ router.get("/:id/item", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+  const partyData = req.body;
+
+  Parties.add(partyData)
+    .then((party) => {
+      res.status(201).json(party);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to create new party" });
+    });
+});
+
 module.exports = router;
