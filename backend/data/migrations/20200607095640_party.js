@@ -24,7 +24,7 @@ exports.up = function (knex) {
         .unsigned()
         .references("id")
         .inTable("individual_party")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
     .createTable("shopping_item", (tbl) => {
@@ -36,7 +36,7 @@ exports.up = function (knex) {
         .unsigned()
         .references("id")
         .inTable("individual_party")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     });
 };
