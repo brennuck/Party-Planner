@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 
-const PartyRouter = require('../party/party-router.js');
+const PartyRouter = require('../parties/party-router.js');
 
 const server = express();
 
