@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Parties = require('./party-model.js');
+const Parties = require("./party-model.js");
 
 const router = express.Router();
 
@@ -18,16 +18,35 @@ router.get("/:id", (req, res) => {
   const { id } = req.params;
 
   Parties.findById(id)
-    .then(party => {
+    .then((party) => {
       if (party) {
-        res.json(party)
+        res.json(party);
       } else {
-        res.status(404).json({ message: "Could not find party with given id" })
+        res.status(404).json({ message: "Could not find party with given id" });
       }
     })
-    .catch(err => {
-      res.status(500).json({ message: "Failed to get party" })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get party" });
+    });
+});
+
+router.get("/:id/todo", (req, res) => {
+  const { id } = req.params;
+
+  Parties.findTodo(id)
+    .then((todos) => {
+      if (todos.length) {
+        res.json(todos);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find a todo for given party" });
+      }
     })
-})
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Failed to get todos" });
+    });
+});
 
 module.exports = router;
