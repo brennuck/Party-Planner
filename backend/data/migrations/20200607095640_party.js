@@ -36,7 +36,7 @@ exports.up = function (knex) {
         .unsigned()
         .references("id")
         .inTable("individual_party")
-        .onDelete("CASCADE")
+        .onDelete("RESTRICT")
         .onUpdate("CASCADE");
     });
 };
