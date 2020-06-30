@@ -3,6 +3,8 @@ exports.up = function (knex) {
     .createTable("parties", (tbl) => {
       tbl.increments();
       tbl.string("name", 256).notNullable().index();
+      tbl.decimal("budget").notNullable();
+      tbl.integer("attendance").notNullable();
     })
     .createTable("individual_party", (tbl) => {
       tbl.increments();
@@ -13,8 +15,6 @@ exports.up = function (knex) {
         .inTable("parties")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
-      tbl.decimal("budget").notNullable();
-      tbl.integer("attendance").notNullable();
     })
     .createTable("todo", (tbl) => {
       tbl.increments();
