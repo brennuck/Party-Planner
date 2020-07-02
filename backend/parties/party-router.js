@@ -5,7 +5,7 @@ const Parties = require("./party-model.js");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Parties.find()
+  Parties.getParties()
     .then((parties) => {
       res.json(parties);
     })
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
-  Parties.findById(id)
+  Parties.getParty(id)
     .then((party) => {
       if (party) {
         res.json(party);
@@ -27,44 +27,6 @@ router.get("/:id", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to get party" });
-    });
-});
-
-router.get("/:id/todo", (req, res) => {
-  const { id } = req.params;
-
-  Parties.findTodo(id)
-    .then((todos) => {
-      if (todos.length) {
-        res.json(todos);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find a todo for given party" });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: "Failed to get todos" });
-    });
-});
-
-router.get("/:id/item", (req, res) => {
-  const { id } = req.params;
-
-  Parties.findItem(id)
-    .then((items) => {
-      if (items.length) {
-        res.json(items);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find a item for given party" });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: "Failed to get items" });
     });
 });
 
@@ -78,6 +40,41 @@ router.post("/", (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).json({ message: "Failed to create new party" });
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  Parties.editParty(id, changes)
+    .then(party => {
+      if (!party) {
+        res.status(404).json({ message: "Could not find party with given id" })
+      } else {
+        res.json({ update: party })
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to update party" })
+    })
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Parties.removeParty(id)
+    .then((deleted) => {
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res.status(404).json({ message: "Could not find party with given id" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to delete party" });
     });
 });
 
