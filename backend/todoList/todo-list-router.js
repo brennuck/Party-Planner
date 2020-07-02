@@ -29,35 +29,39 @@ router.post("/todos", (req, res) => {
   console.log(todo);
 
   if (!todo) {
-    res.status(404).json({ error: "please provide an item and party id to be added to the list" })
+    res
+      .status(404)
+      .json({
+        error: "please provide an item and party id to be added to the list",
+      });
   } else {
     Todos.addTodo(todo)
-      .then(id => {
-        res.status(200).json({ message: "successfully added" })
+      .then((id) => {
+        res.status(200).json({ message: "successfully added" });
       })
-      .catch(error => {
-        console.log(error)
-        res.status(500).json({ error: "could not add todo" })
-      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: "could not add todo" });
+      });
   }
-})
+});
 
 router.put("/:id/todo/:id", (req, res) => {
-    const { id } = req.params;
-    const changes = req.body;
+  const { id } = req.params;
+  const changes = req.body;
 
-    Todos.editTodo(id, changes)
-        .then(todo => {
-            if (todo) {
-                res.json({ update: todo })
-            } else {
-                res.status(404).json({ message: "Could not find todo with given id" })
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ message: "Failed to update todo" })
-        })
-})
+  Todos.editTodo(id, changes)
+    .then((todo) => {
+      if (todo) {
+        res.json({ update: todo });
+      } else {
+        res.status(404).json({ message: "Could not find todo with given id" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to update todo" });
+    });
+});
 
 module.exports = router;
