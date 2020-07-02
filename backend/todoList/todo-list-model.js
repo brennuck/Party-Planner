@@ -10,7 +10,7 @@ module.exports = {
 function getTodoList(id) {
   return db("todo_list")
     .join("parties", "parties.id", "=", "todo_list.party_id")
-    .select("todo_list.todo as Todo", "todo_list.completed")
+    .select("todo_list.id", "todo_list.todo as Todo", "todo_list.completed")
     .where({ party_id: id });
 }
 

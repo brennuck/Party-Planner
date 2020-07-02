@@ -42,4 +42,22 @@ router.post("/todos", (req, res) => {
   }
 })
 
+router.put("/:id/todo/:id", (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+
+    Todos.editTodo(id, changes)
+        .then(todo => {
+            if (todo) {
+                res.json({ update: todo })
+            } else {
+                res.status(404).json({ message: "Could not find todo with given id" })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: "Failed to update todo" })
+        })
+})
+
 module.exports = router;
