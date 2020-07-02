@@ -23,4 +23,23 @@ router.get("/:id/todo", (req, res) => {
     });
 });
 
+router.post("/todos", (req, res) => {
+  const todo = req.body;
+  const id = req.params.id;
+  console.log(todo);
+
+  if (!todo) {
+    res.status(404).json({ error: "please provide an item and party id to be added to the list" })
+  } else {
+    Todos.addTodo(todo)
+      .then(id => {
+        res.status(200).json({ message: "successfully added" })
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(500).json({ error: "could not add todo" })
+      })
+  }
+})
+
 module.exports = router;
