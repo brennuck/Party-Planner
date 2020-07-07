@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   const partyData = req.body;
 
-  Parties.add(partyData)
+  Parties.addParty(partyData)
     .then((party) => {
       res.status(201).json(party);
     })
