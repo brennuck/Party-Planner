@@ -5,8 +5,6 @@ const router = require("express").Router();
 
 const secret = require("../config/secrets.js");
 const Auth = require("./auth-model.js");
-const { authenticate } = require("./authenticate.js");
-const { findBy } = require("./auth-model.js");
 
 router.post("/register", (req, res) => {
   let user = req.body;
@@ -27,7 +25,7 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   let { username, password } = req.body;
-  findBy({ username })
+  Auth.findBy({ username })
     .first()
     .then((user) => {
       if (user && bcrypt.compareSync(password, user.password)) {
